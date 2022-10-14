@@ -6,7 +6,7 @@
     templates = {
       haskell-cabal = {
         path = ./haskell-cabal-template;
-        description = "Cabal project scaffold";
+        description = "Cabal project environment";
       };
     };
   };

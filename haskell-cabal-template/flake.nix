@@ -1,30 +1,18 @@
 {
-  description = "Cabal project scaffold";
-
-  inputs.nixpkgs.url = "nixpkgs/nixos-unstable";
+  description = "A very basic flake";
 
   outputs = { self, nixpkgs }:
     let
-      supportedSystems = ["x86_64-linux" "x86_64-darwin"];
+      supportedSystems = [ "x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin" ];
       forAllSystems = f: nixpkgs.lib.genAttrs supportedSystems (system: f system);
-      nixpkgsFor = forAllSystems (system: import nixpkgs {
-        inherit system;
-        overlays = [self.overlay];
-      });
+      nixpkgsFor = forAllSystems (system: import nixpkgs {inherit system;});
+
     in {
-      overlay = (final: prev: {
-        haskell-cabal = final.haskellPackages.callCabal2nix "haskell-cabal" ./. {};
-      });
-      packages = forAllSystems (system: {
-        haskell-cabal = nixpkgsFor.${system}.haskell-cabal;
-      });
-      defaultPackage = forAllSystems (system: self.packages.${system}.haskell-cabal);
-      # checks = self.packages;
-      devShells = forAllSystems (system:
+      devShells = forAllSystems(system:
         let pkgs = nixpkgsFor.${system};
         in {
           default = pkgs.mkShell {
-            packages = [self.packages.${system}.haskell-cabal];
+            packages = [];
             buildInputs = with pkgs; [
               cabal-install
               haskell.compiler.ghc924
@@ -32,6 +20,6 @@
             ];
           shellHook = "export PS1='\\e[1;34mdev > \\e[0m'";
           };
-      });
+        });
     };
 }
