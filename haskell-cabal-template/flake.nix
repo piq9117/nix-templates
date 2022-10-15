@@ -18,7 +18,7 @@
               haskell.compiler.ghc924
               ghcid
             ];
-          shellHook = "export PS1='\\e[1;34mdev > \\e[0m'";
+          shellHook = "export PS1='[$PWD]\n❄ '";
           };
         });
     };
