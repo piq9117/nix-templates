@@ -8,6 +8,12 @@
         path = ./haskell-cabal-template;
         description = "Cabal project environment";
       };
+
+      nodejs = {
+        path = ./nodejs-template;
+        description = "Nodejs project environment";
+      };
+
     };
   };
 }
