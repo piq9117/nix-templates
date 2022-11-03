@@ -13,3 +13,9 @@ nix flake init -t "github:piq9117/nix-templates#haskell-cabal"
 ``` sh
 nix flake init -t "github:piq9117/nix-templates#nodejs"
 ```
+
+## Go
+
+``` sh
+nix flake init -t "github:piq9117/nix-templates#go"
+```
