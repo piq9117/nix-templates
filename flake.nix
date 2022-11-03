@@ -6,14 +6,18 @@
     templates = {
       haskell-cabal = {
         path = ./haskell-cabal-template;
-        description = "Cabal project environment";
+        description = "Cabal project template";
       };
 
       nodejs = {
         path = ./nodejs-template;
-        description = "Nodejs project environment";
+        description = "Nodejs project template";
       };
 
+      go = {
+        path = ./go-template;
+        description = "Go project template";
+      };
     };
   };
 }
