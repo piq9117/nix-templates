@@ -23,6 +23,9 @@
         let pkgs = nixpkgsFor.${system};
         in {
           default = pkgs.mkShell {
+            installPhase = ''
+            chmod +x ${./build.sh}
+            '';
             packages = [
               self.packages.${system}.build-all
             ];
