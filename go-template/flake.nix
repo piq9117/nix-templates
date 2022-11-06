@@ -23,6 +23,10 @@
           ${./run.sh} "$@"
         '';
 
+        run-main = nixpkgsFor.${system}.writeShellScriptBin "run-main" ''
+          ${./run-main.sh}
+        '';
+
       });
       devShells = forAllSystems (system:
         let pkgs = nixpkgsFor.${system};
