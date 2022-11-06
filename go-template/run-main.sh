@@ -3,4 +3,4 @@
 
 GITROOT=$(git rev-parse --show-toplevel)
 
-go run "$@".go
+go run $GITROOT/main.go
