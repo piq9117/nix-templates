@@ -14,19 +14,25 @@
 
     in {
       overlay = final: prev: {};
-      packages = forAllSystems (system: {});
+      packages = forAllSystems (system: {
+        build-all = nixpkgsFor.${system}.writeShellScriptBin "build-all" ''
+          ${./build.sh}
+        '';
+      });
       devShells = forAllSystems (system:
         let pkgs = nixpkgsFor.${system};
         in {
           default = pkgs.mkShell {
-
-          buildInputs = with pkgs; [
-              go
-              gopls
-              gotools
-              go-tools
+            packages = [
+              self.packages.${system}.build-all
             ];
-          shellHook = "export PS1='[$PWD]\n❄ '";
+            buildInputs = with pkgs; [
+                go
+                gopls
+                gotools
+                go-tools
+              ];
+            shellHook = "export PS1='[$PWD]\n❄ '";
           };
         });
     };
