@@ -18,6 +18,11 @@
         build-all = nixpkgsFor.${system}.writeShellScriptBin "build-all" ''
           ${./build.sh}
         '';
+
+        run-package = nixpkgsFor.${system}.writeShellScriptBin "run" ''
+          ${./run.sh} "$@"
+        '';
+
       });
       devShells = forAllSystems (system:
         let pkgs = nixpkgsFor.${system};
@@ -25,6 +30,7 @@
           default = pkgs.mkShell {
             packages = [
               self.packages.${system}.build-all
+              self.packages.${system}.run-package
             ];
             buildInputs = with pkgs; [
                 go
