@@ -19,3 +19,4 @@ nix flake init -t "github:piq9117/nix-templates#nodejs"
 ``` sh
 nix flake init -t "github:piq9117/nix-templates#go"
 ```
+Give `build.sh` and `run.sh` permission.
