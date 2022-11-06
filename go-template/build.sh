@@ -3,4 +3,4 @@
 
 GITROOT=$(git rev-parse --show-toplevel)
 
-go build $(find $GITROOT -type f -name "*.go")
+go build $(find $GITROOT -type f -name "main.go")
