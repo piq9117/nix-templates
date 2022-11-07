@@ -14,18 +14,25 @@
 
     in {
       overlay = final: prev: {};
-      packages = forAllSystems (system: {
-        build-all = nixpkgsFor.${system}.writeShellScriptBin "build-all" ''
-          ${./build.sh}
-        '';
+      packages = forAllSystems (system:
+        let
+          pkgs = nixpkgsFor.${system};
+          go = pkgs.go_1_18;
+        in {
+          build-all = pkgs.writeShellScriptBin "build-all" ''
+            GITROOT=$(git rev-parse --show-toplevel)
+            ${go}/bin/go build -o $GITROOT/$(basename $GITROOT) $(find $GITROOT -type f -name "main.go")
+          '';
 
-        run-package = nixpkgsFor.${system}.writeShellScriptBin "run" ''
-          ${./run.sh} "$@"
-        '';
+          run-package = pkgs.writeShellScriptBin "run" ''
+            GITROOT=$(git rev-parse --show-toplevel)
+            ${go}/bin/go run "$@".go
+          '';
 
-        run-main = nixpkgsFor.${system}.writeShellScriptBin "run-main" ''
-          ${./run-main.sh}
-        '';
+          run-main = nixpkgsFor.${system}.writeShellScriptBin "run-main" ''
+            GITROOT=$(git rev-parse --show-toplevel)
+            ${go}/bin/go run $GITROOT/main.go
+          '';
 
       });
       devShells = forAllSystems (system:
