@@ -12,8 +12,7 @@
         overlays = [];
       });
 
-    in {
-      overlay = final: prev: {};
+    in {overlay = final: prev: {};
       packages = forAllSystems (system:
         let
           pkgs = nixpkgsFor.${system};
@@ -21,7 +20,7 @@
         in {
           build-all = pkgs.writeShellScriptBin "build-all" ''
             GITROOT=$(git rev-parse --show-toplevel)
-            ${go}/bin/go build -o $GITROOT/$(basename $GITROOT) $(find $GITROOT -type f -name "main.go")
+            ${go}/bin/go build -o $GITROOT/$(basename $GITROOT) $GITROOT/main.go
           '';
 
           run-package = pkgs.writeShellScriptBin "run" ''
@@ -29,9 +28,14 @@
             ${go}/bin/go run "$@".go
           '';
 
-          run-main = nixpkgsFor.${system}.writeShellScriptBin "run-main" ''
+          run-main = pkgs.writeShellScriptBin "run-main" ''
             GITROOT=$(git rev-parse --show-toplevel)
             ${go}/bin/go run $GITROOT/main.go
+          '';
+
+          go-format = pkgs.writeShellScriptBin "go-format" ''
+            GITROOT=$(git rev-parse --show-toplevel)
+            ${go}/bin/go fmt ./...
           '';
 
       });
