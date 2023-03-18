@@ -20,3 +20,7 @@ nix flake init -t "github:piq9117/nix-templates#nodejs"
 nix flake init -t "github:piq9117/nix-templates#go"
 ```
 Give `build.sh` and `run.sh` permission.
+
+## Purescript
+
+Use [purs-nix](https://github.com/purs-nix/purs-nix)
