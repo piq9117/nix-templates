@@ -1,31 +1,42 @@
 {
   description = "Basic haskell cabal template";
 
-  inputs.nixpkgs.url = "nixpkgs/nixos-22.05";
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/22.11";
 
   outputs = { self, nixpkgs }:
     let
-      supportedSystems = [ "x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin" ];
-      forAllSystems = f: nixpkgs.lib.genAttrs supportedSystems (system: f system);
+      forAllSystems = nixpkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed;
       nixpkgsFor = forAllSystems (system: import nixpkgs {
         inherit system;
-        overlays = [self.overlay];
+        overlays = [ self.overlay ];
       });
-
-    in {
-      overlay = final: prev: {};
-      packages = forAllSystems (system: {});
-      devShells = forAllSystems(system:
-        let pkgs = nixpkgsFor.${system};
-        in {
-          default = pkgs.mkShell {
-            packages = [];
+    in
+    {
+      overlay = self: super: {
+        hsPkgs = super.haskell.packages.ghc943.override {
+          overrides = hself: hsuper: {
+            hspec-contrib = super.haskell.lib.dontCheck (super.haskell.lib.doJailbreak hsuper.hspec-contrib);
+          };
+        };
+      };
+      devShells = forAllSystems (system:
+        let
+          pkgs = nixpkgsFor.${system};
+          libs = with pkgs; [
+            zlib
+          ];
+        in
+        {
+          default = pkgs.hsPkgs.shellFor {
+            packages = hsPkgs: [ ];
             buildInputs = with pkgs; [
-              cabal-install
-              haskell.compiler.ghc924
-              ghcid
-            ];
-          shellHook = "export PS1='[$PWD]\n❄ '";
+              hsPkgs.cabal-install
+              hsPkgs.cabal-fmt
+              hsPkgs.ghcid
+              hsPkgs.ghc
+            ] ++ libs;
+            shellHook = "export PS1='[$PWD]\n❄ '";
+            LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath libs;
           };
         });
     };

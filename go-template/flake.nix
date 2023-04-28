@@ -9,15 +9,18 @@
       forAllSystems = f: nixpkgs.lib.genAttrs supportedSystems (system: f system);
       nixpkgsFor = forAllSystems (system: import nixpkgs {
         inherit system;
-        overlays = [];
+        overlays = [ ];
       });
 
-    in {overlay = final: prev: {};
+    in
+    {
+      overlay = final: prev: { };
       packages = forAllSystems (system:
         let
           pkgs = nixpkgsFor.${system};
           go = pkgs.go_1_18;
-        in {
+        in
+        {
           build-all = pkgs.writeShellScriptBin "build-all" ''
             GITROOT=$(git rev-parse --show-toplevel)
             ${go}/bin/go build -o $GITROOT/$(basename $GITROOT) $GITROOT/main.go
@@ -38,7 +41,7 @@
             ${go}/bin/go fmt ./...
           '';
 
-      });
+        });
       devShells = forAllSystems (system:
         let pkgs = nixpkgsFor.${system};
         in {
@@ -48,11 +51,11 @@
               self.packages.${system}.run-package
             ];
             buildInputs = with pkgs; [
-                go
-                gopls
-                gotools
-                go-tools
-              ];
+              go
+              gopls
+              gotools
+              go-tools
+            ];
             shellHook = "export PS1='[$PWD]\n❄ '";
           };
         });
