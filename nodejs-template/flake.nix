@@ -12,24 +12,25 @@
 
       nixpkgsFor = forAllSystems (system: import nixpkgs {
         inherit system;
-        overlays = [self.overlay];
+        overlays = [ self.overlay ];
       });
 
-    in {
-      overlay = final: prev: {};
+    in
+    {
+      overlay = final: prev: { };
 
-      packages = forAllSystems (system: {});
+      packages = forAllSystems (system: { });
 
       devShells = forAllSystems (system:
         let pkgs = nixpkgsFor.${system};
         in {
           default = pkgs.mkShell {
-            packages = [];
+            packages = [ ];
             buildInputs = with pkgs; [
               nodejs
             ];
 
-          shellHook = "export PS1='[$PWD]\n❄ '";
+            shellHook = "export PS1='[$PWD]\n❄ '";
           };
         }
       );
