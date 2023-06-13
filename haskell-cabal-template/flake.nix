@@ -1,7 +1,7 @@
 {
   description = "Basic haskell cabal template";
 
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/22.11";
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/23.05";
 
   outputs = { self, nixpkgs }:
     let
@@ -13,9 +13,9 @@
     in
     {
       overlay = self: super: {
-        hsPkgs = super.haskell.packages.ghc943.override {
+        hsPkgs = super.haskell.packages.ghc944.override {
           overrides = hself: hsuper: {
-            hspec-contrib = super.haskell.lib.dontCheck (super.haskell.lib.doJailbreak hsuper.hspec-contrib);
+            ghcid = super.haskell.lib.dontCheck hsuper.ghcid;
           };
         };
       };
