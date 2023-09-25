@@ -1,0 +1,4 @@
+[formatter.ocaml]
+command = "ocamlformat"
+options = ["--inplace"]
+includes = ["*.ml"]

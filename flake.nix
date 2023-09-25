@@ -18,6 +18,11 @@
         path = ./go-template;
         description = "Go project template";
       };
+
+      ocaml = {
+        path = ./ocaml-template;
+        description = "OCaml project template";
+      };
     };
   };
 }

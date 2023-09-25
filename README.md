@@ -30,3 +30,9 @@ nix flake new -t templates#go-hello .
 ## Purescript
 
 Use [purs-nix](https://github.com/purs-nix/purs-nix)
+
+## OCaml
+
+``` sh
+nix flake init -t "github:piq9117/nix-templates#ocaml"
+```
