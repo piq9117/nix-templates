@@ -23,6 +23,11 @@
         path = ./ocaml-template;
         description = "OCaml project template";
       };
+
+      purescript = {
+        path = ./purescript-template;
+        description = "Purescript project template";
+      };
     };
   };
 }
