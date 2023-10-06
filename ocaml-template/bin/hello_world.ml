@@ -1,1 +1,1 @@
-Lwt_main.run (Lwt_io.printf "Hello, world!\n")
+print_endline "Hello, world!\n"
