@@ -1,7 +1,7 @@
 {
   description = "Basic haskell cabal template";
 
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/23.05";
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/23.11";
 
   outputs = { self, nixpkgs }:
     let
