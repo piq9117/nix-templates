@@ -1,11 +1,16 @@
 {
   description = "Basic purescript flake";
 
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/23.05";
-  inputs.purescript-overlay.url = "github:thomashoneyman/purescript-overlay";
-  inputs.purescript-overlay.inputs.nixpkgs.follows = "nixpkgs";
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/23.11";
+    purescript-overlay = {
+      url = "github:thomashoneyman/purescript-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    easy-purescript-nix.url = "github:justinwoo/easy-purescript-nix";
+  };
 
-  outputs = { self, nixpkgs, purescript-overlay }:
+  outputs = { self, nixpkgs, purescript-overlay, easy-purescript-nix }:
     let
       forAllSystems = nixpkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed;
       nixpkgsFor = forAllSystems(system: import nixpkgs {
@@ -18,19 +23,24 @@
       devShells = forAllSystems (system:
         let
           pkgs = nixpkgsFor.${system};
+          easy-ps = easy-purescript-nix.packages.${system};
         in
         {
           default = pkgs.mkShell {
-            buildInputs = with pkgs; [
-              purs
-              spago
-              purs-tidy-bin.purs-tidy-0_10_0
-              purs-backend-es
-              treefmt
-              nixpkgs-fmt
-              nodejs
+            buildInputs = [
+              easy-ps.purs-0_15_8
+              easy-ps.spago
+              easy-ps.purescript-language-server
+              easy-ps.purs-tidy
+              pkgs.nodejs-18_x
+              pkgs.esbuild
             ];
-            shellHook = "export PS1='[$PWD]\n❄ '";
+            shellHook = ''
+              export PS1='[$PWD]\n❄ '
+
+              source <(spago --bash-completion-script `which spago`)
+              source <(node --completion-bash)
+            '';
           };
         });
     };
