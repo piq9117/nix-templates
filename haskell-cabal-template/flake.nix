@@ -8,17 +8,18 @@
       forAllSystems = nixpkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed;
       nixpkgsFor = forAllSystems (system: import nixpkgs {
         inherit system;
-        overlays = [ self.overlay ];
+        overlays = [self.overlay];
       });
     in
     {
-      overlay = self: super: {
-        hsPkgs = super.haskell.packages.ghc944.override {
-          overrides = hself: hsuper: {
-            ghcid = super.haskell.lib.dontCheck hsuper.ghcid;
+      overlay = final: prev: {
+        hsPkgs = prev.haskell.packages.ghc944.override {
+          overrides = hfinal: hprev: {
+            ghcid = prev.haskell.lib.dontCheck hprev.ghcid;
           };
         };
       };
+
       devShells = forAllSystems (system:
         let
           pkgs = nixpkgsFor.${system};

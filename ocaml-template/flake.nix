@@ -12,7 +12,7 @@
       });
     in
     {
-      overlay = self: super: {};
+      overlay = final: prev: {};
       devShells = forAllSystems (system:
         let
           pkgs = nixpkgsFor.${system};
