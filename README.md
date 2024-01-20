@@ -68,3 +68,8 @@ nix flake init -t "github:piq9117/nix-templates#purescript"
 ``` sh
 nix flake init -t "github:piq9117/nix-templates#ocaml"
 ```
+
+## React NextJS
+``` sh
+nix flake init -t "github:piq9117/nix-templates#react-nextjs"
+```

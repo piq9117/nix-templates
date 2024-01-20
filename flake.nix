@@ -28,6 +28,11 @@
         path = ./purescript-template;
         description = "Purescript project template";
       };
+
+      react-nextjs = {
+        path = ./react-nextjs-template;
+        description = "React NextJS Template";
+      };
     };
   };
 }
