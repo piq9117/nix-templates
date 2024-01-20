@@ -22,6 +22,8 @@
       buildInputs = with pkgs; [
         nodejs_20
         nodePackages_latest.pnpm
+        nodePackages.prettier
+        treefmt
       ];
       nativeBuildInputs = buildInputs;
       npmDepsHash = ""; # <prefetch-npm-deps package-lock.json>
