@@ -33,6 +33,11 @@
         path = ./react-nextjs-template;
         description = "React NextJS Template";
       };
+
+      react = {
+        path = ./react-template;
+        description = "React Template";
+      };
     };
   };
 }
