@@ -74,7 +74,12 @@ nix flake init -t "github:piq9117/nix-templates#ocaml"
 nix flake init -t "github:piq9117/nix-templates#react-nextjs"
 ```
 
-## React 
+## React TS
 ``` sh
-nix flake init -t "github:piq9117/nix-templates#react"
+nix flake init -t "github:piq9117/nix-templates#react-ts"
+```
+
+## React JS
+``` sh
+nix flake init -t "github:piq9117/nix-templates#react-js"
 ```

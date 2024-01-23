@@ -38,6 +38,11 @@
         path = ./react-ts-template;
         description = "React TS Template";
       };
+
+      react-js = {
+        path = ./react-js-template;
+        description = "React JS Template";
+      };
     };
   };
 }
