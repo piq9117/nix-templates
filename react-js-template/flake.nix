@@ -19,6 +19,8 @@
       overlay = final: prev: {
         generate-vite-app = final.writeScriptBin "generate-vite-app" ''
           ${final.nodePackages_latest.pnpm}/bin/pnpm create vite . --template react
+          ${final.nodePackages_latest.pnpm}/bin/pnpm install typescript --save-dev
+          ${final.nodePackages_latest.pnpm}/bin/pnpm install
         '';
       };
       devShells = forAllSystems(system:

@@ -1,4 +1,4 @@
 [formatter.typescript]
 command = "prettier"
 options = ["--write"]
-includes = ["*.js", "*.ts", "*.tsx"]
+includes = ["*.js", "*.ts", "*.tsx", "*.jsx"]
