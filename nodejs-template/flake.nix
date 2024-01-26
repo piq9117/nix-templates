@@ -25,9 +25,12 @@
         let pkgs = nixpkgsFor.${system};
         in {
           default = pkgs.mkShell {
-            packages = [ ];
             buildInputs = with pkgs; [
-              nodejs
+              nodejs_20
+              nodePackages_latest.npm
+              nodePackages_latest.pnpm
+              nodePackages_latest.prettier
+              treefmt
             ];
 
             shellHook = "export PS1='[$PWD]\n❄ '";
