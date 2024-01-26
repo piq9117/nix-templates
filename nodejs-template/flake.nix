@@ -1,7 +1,7 @@
 {
   description = "Basic nodejs template";
 
-  inputs.nixpkgs.url = "nixpkgs/nixos-22.05";
+  inputs.nixpkgs.url = "nixpkgs/nixos-23.11";
 
   outputs = { self, nixpkgs }:
 
@@ -17,7 +17,12 @@
 
     in
     {
-      overlay = final: prev: { };
+      overlay = final: prev: {
+        init-project = final.writeScriptBin "init-project" ''
+          ${final.nodePackages_latest.npm}/bin/npm init --y
+          ${final.nodePackages_latest.npm}/bin/npm install @tsconfig/node20 ts-node
+        '';
+      };
 
       packages = forAllSystems (system: { });
 
@@ -31,6 +36,8 @@
               nodePackages_latest.pnpm
               nodePackages_latest.prettier
               treefmt
+              typescript
+              init-project
             ];
 
             shellHook = "export PS1='[$PWD]\n❄ '";
