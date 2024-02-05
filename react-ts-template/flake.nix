@@ -30,6 +30,7 @@
               nodePackages_latest.npm
               nodePackages_latest.pnpm
               nodePackages.prettier
+              nodePackages_latest.typescript-language-server
               treefmt
               generate-vite-app
             ];
