@@ -18,6 +18,9 @@
             ghcid = prev.haskell.lib.dontCheck hprev.ghcid;
           };
         };
+        init-project = final.writeScriptBin "init-project" ''
+          ${final.hsPkgs.cabal-install}/bin/cabal init --non-interactive
+        '';
       };
 
       devShells = forAllSystems (system:
@@ -39,6 +42,7 @@
               treefmt
               nixpkgs-fmt
               hsPkgs.cabal-fmt
+              init-project
             ] ++ libs;
             shellHook = "export PS1='[$PWD]\n❄ '";
             LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath libs;
