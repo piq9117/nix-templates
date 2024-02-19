@@ -43,6 +43,7 @@
               nixpkgs-fmt
               hsPkgs.cabal-fmt
               init-project
+              hsPkgs.haskell-language-server
             ] ++ libs;
             shellHook = "export PS1='[$PWD]\n❄ '";
             LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath libs;
