@@ -43,6 +43,11 @@
         path = ./react-js-template;
         description = "React JS Template";
       };
+
+      scala = {
+        path = ./scala-template;
+        description = "Scala Template";
+      };
     };
   };
 }
