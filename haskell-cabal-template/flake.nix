@@ -36,7 +36,6 @@
             buildInputs = with pkgs; [
               hsPkgs.cabal-install
               hsPkgs.cabal-fmt
-              hsPkgs.ghcid
               hsPkgs.ghc
               ormolu
               treefmt
