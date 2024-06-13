@@ -23,6 +23,7 @@
 	    buildInputs = with pkgs; [
 	      sbt 
 	      metals
+	      ammonite
 	    ];
 	    shellHook = ''
 	      export PS1='[$PWD]\n❄ '
