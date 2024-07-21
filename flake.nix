@@ -19,6 +19,12 @@
         description = "Go project template";
       };
 
+      # This information was from https://xeiaso.net/blog/nix-flakes-go-programs/
+      gomod2nix = {
+        path = ./gomod2nix-template;
+        description = "Gomod2nix project template";
+      };
+
       ocaml = {
         path = ./ocaml-template;
         description = "OCaml project template";
