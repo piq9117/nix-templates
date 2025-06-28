@@ -1,7 +1,7 @@
 {
   description = "Basic haskell cabal template";
 
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
   outputs = { self, nixpkgs }:
     let
@@ -13,7 +13,7 @@
     in
     {
       overlay = final: prev: {
-        hsPkgs = prev.haskell.packages.ghc965.override {
+        hsPkgs = prev.haskell.packages.ghc9102.override {
           overrides = hfinal: hprev: { };
         };
         init-project = final.writeScriptBin "init-project" ''
