@@ -1,7 +1,7 @@
 {
   description = "Basic go template";
 
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/23.11";
+  inputs.nixpkgs.url = github:NixOS/nixpkgs/nixos-unstable;
 
   outputs = { self, nixpkgs }:
     let
