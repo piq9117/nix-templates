@@ -9,6 +9,11 @@
         description = "Cabal project template";
       };
 
+      haskell-stack = {
+        path = ./haskell-stack-template;
+        description = "Stack project template";
+      };
+
       nodejs = {
         path = ./nodejs-template;
         description = "Nodejs project template";
