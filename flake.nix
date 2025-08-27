@@ -59,6 +59,11 @@
         path = ./scala-template;
         description = "Scala Template";
       };
+
+      rust = {
+        path = ./rust-cargo-template;
+        description = "Rust Template";
+      };
     };
   };
 }
