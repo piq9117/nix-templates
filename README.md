@@ -58,3 +58,8 @@ nix flake init -t "github:piq9117/nix-templates#react-js"
 ```sh
 nix flake init -t "github:piq9117/nix-templates#scala"
 ```
+
+# Rust
+```sh
+nix flake init -t "github:piq9117/nix-templates#rust"
+```

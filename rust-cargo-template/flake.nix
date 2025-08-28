@@ -41,6 +41,8 @@
               rustc
               cargo
               rust-analyzer
+              rustfmt
+              treefmt
             ];
             shellHook = ''
               export PS1='[$PWD]\n❄ '
