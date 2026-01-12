@@ -64,6 +64,10 @@
         path = ./rust-cargo-template;
         description = "Rust Template";
       };
+      flutter = {
+        path = ./flutter-template;
+        description = "Flutter Template";
+      };
     };
   };
 }

@@ -1,0 +1,8 @@
+[formatter.dart]
+command = "dart"
+options = ["format"]
+includes = ["*.dart"]
+
+[formatter.nix]
+command = "nixpkgs-fmt"
+includes = ["*.nix"]
