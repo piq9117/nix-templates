@@ -1,9 +1,0 @@
-[formatter.go]
-command = "gofmt"
-options = "-w"
-includes = [".go"]
-
-
-[formatter.nix]
-command = "nixpkgs-fmt"
-includes = ["*.nix"]

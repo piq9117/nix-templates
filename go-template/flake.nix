@@ -1,39 +1,15 @@
 {
-  description = "Basic go template";
+  description = "go template";
 
-  inputs = {
-    nixpkgs.url = github:NixOS/nixpkgs/nixos-unstable;
-    gomod2nix.url = github:nix-community/gomod2nix;
-  };
-  
-  outputs = { self, nixpkgs, gomod2nix }:
+  inputs.nixpkgs.url = github:NixOS/nixpkgs/nixpkgs-unstable;
+  outputs = {self, nixpkgs}: 
     let
-      lastModifiedDate = self.lastModifiedDate or self.lastModified or "19700101";
-
-      version = builtins.substring 0 8 lastModifiedDate;
-
-      supportedSystems = [ "x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin" ];
-
-      forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
-
-      nixpkgsFor = forAllSystems (system: import nixpkgs {
+      forAllSystems = nixpkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed;
+      nixpkgsFor = forAllSystems(system: import nixpkgs {
         inherit system;
       });
-    in
-    {
-      packages = forAllSystems(system: 
-      let
-        pkgs = nixpkgsFor.${system};
-      in {
-        default = pkgs.buildGoModule {
-          inherit version;
-          pname = "go-template";
-          src = ./.;
-          vendorHash = null;
-        };
-      });
-
-      devShells = forAllSystems(system:
+    in {
+      devShells = forAllSystems(system: 
         let
           pkgs = nixpkgsFor.${system};
         in {
@@ -41,16 +17,9 @@
             buildInputs = with pkgs; [
               go
               gopls
-              gotools
-              go-tools
+              golangci-lint
+              delve
             ];
-            shellHook = ''
-              export PS1='[$PWD]\n❄ ';
-              export GOPATH=$HOME/go
-              export PATH=$GOPATH/bin:$PATH
-              echo "Go version: $(go version)"
-              echo "Development environment ready."
-            '';
           };
         });
     };
