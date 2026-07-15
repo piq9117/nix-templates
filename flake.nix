@@ -62,6 +62,11 @@
         path = ./flutter-template;
         description = "Flutter Template";
       };
+
+      gleam = {
+        path = ./gleam-template;
+        description = "Gleam Template";
+      };
     };
   };
 }

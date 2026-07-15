@@ -68,3 +68,7 @@ nix flake init -t "github:piq9117/nix-templates#rust"
 ```sh
 nix flake init -t "github:piq9117/nix-templates#flutter"
 ```
+
+# Gleam
+```sh
+nix flake init -t "github:piq9117/nix-templates#gleam"
