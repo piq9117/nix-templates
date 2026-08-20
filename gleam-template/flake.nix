@@ -19,11 +19,11 @@
       overlay = final: prev: {
         # gleam application
         # update the name matching your project
-        my-project = final.buildGleamApplication {
-          pname = "my-project";
-          version = "latest";
-          src = ./.;
-        };
+        # my-project = final.buildGleamApplication {
+        #   pname = "my-project";
+        #   version = "latest";
+        #   src = ./.;
+        # };
       };
 
       packages = forAllSystems (system:
@@ -31,7 +31,7 @@
           pkgs = nixpkgsFor.${system};
         in
         {
-          default = pkgs.my-project;
+          # default = pkgs.my-project;
         });
 
       devShells = forAllSystems (system:
