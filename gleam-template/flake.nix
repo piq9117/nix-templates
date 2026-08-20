@@ -11,12 +11,12 @@
       forAllSystems = nixpkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed;
       nixpkgsFor = forAllSystems (system: import nixpkgs {
         inherit system;
-        overlays = [ self.overlays nix-gleam.overlays.default ];
+        overlays = [ self.overlay nix-gleam.overlays.default ];
 
       });
     in
     {
-      overlays = final: prev: {
+      overlay = final: prev: {
         # gleam application
         # update the name matching your project
         my-project = final.buildGleamApplication {

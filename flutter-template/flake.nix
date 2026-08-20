@@ -10,7 +10,7 @@
       forAllSystems = nixpkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed;
       nixpkgsFor = forAllSystems (system: import nixpkgs {
         inherit system;
-        overlays = [ self.overlays ];
+        overlays = [ self.overlay ];
         config = {
           android_sdk.accept_license = true;
           allowUnfree = true;
@@ -19,7 +19,7 @@
 
     in
     {
-      overlays = final: prev: { };
+      overlay = final: prev: { };
       devShells = forAllSystems (system:
         let
           pkgs = nixpkgsFor.${system};
