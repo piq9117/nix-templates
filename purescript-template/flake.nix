@@ -13,13 +13,13 @@
   outputs = { self, nixpkgs, purescript-overlay, easy-purescript-nix }:
     let
       forAllSystems = nixpkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed;
-      nixpkgsFor = forAllSystems(system: import nixpkgs {
+      nixpkgsFor = forAllSystems (system: import nixpkgs {
         inherit system;
         overlays = [ self.overlay purescript-overlay.overlays.default ];
       });
     in
     {
-      overlay = final: prev: {};
+      overlay = final: prev: { };
       devShells = forAllSystems (system:
         let
           pkgs = nixpkgsFor.${system};

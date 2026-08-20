@@ -1,0 +1,12 @@
+[formatter.nix]
+command = "nixpkgs-fmt"
+includes = ["*.nix"]
+
+[formatter.typescript]
+command = "biome"
+options = [
+  "check", "--write",
+  "--indent-style=space",
+  "--indent-width=2"
+]
+includes = ["*.ts"]

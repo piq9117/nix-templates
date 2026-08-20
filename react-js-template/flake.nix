@@ -5,17 +5,18 @@
     nixpkgs.url = "nixpkgs";
   };
 
-  outputs = {self, nixpkgs}:
+  outputs = { self, nixpkgs }:
     let
       supportedSystems = [ "x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin" ];
       forAllSystems = f: nixpkgs.lib.genAttrs supportedSystems (system: f system);
 
-      nixpkgsFor = forAllSystems(system: import nixpkgs {
+      nixpkgsFor = forAllSystems (system: import nixpkgs {
         inherit system;
-        overlays = [self.overlay];
+        overlays = [ self.overlay ];
       });
 
-    in {
+    in
+    {
       overlay = final: prev: {
         generate-vite-app = final.writeScriptBin "generate-vite-app" ''
           ${final.nodePackages_latest.pnpm}/bin/pnpm create vite . --template react
@@ -23,7 +24,7 @@
           ${final.nodePackages_latest.pnpm}/bin/pnpm install
         '';
       };
-      devShells = forAllSystems(system:
+      devShells = forAllSystems (system:
         let pkgs = nixpkgsFor.${system};
         in {
           default = pkgs.mkShell {

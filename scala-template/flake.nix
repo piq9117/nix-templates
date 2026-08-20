@@ -5,30 +5,32 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
   };
 
-  outputs = {self, nixpkgs}: 
+  outputs = { self, nixpkgs }:
     let
-      supportedSystems = ["x86_64-linux"];
+      supportedSystems = [ "x86_64-linux" ];
       forAllSystems = f: nixpkgs.lib.genAttrs supportedSystems (system: f system);
-      nixpkgsFor = forAllSystems(system: import nixpkgs {
+      nixpkgsFor = forAllSystems (system: import nixpkgs {
         inherit system;
-	overlays = [self.overlay];
+        overlays = [ self.overlay ];
       });
-    in { 
-      overlay = final: prev: {};
-      devShells = forAllSystems(system: 
+    in
+    {
+      overlay = final: prev: { };
+      devShells = forAllSystems (system:
         let
-	  pkgs = nixpkgsFor.${system};
-        in {
-	  default = pkgs.mkShell {
-	    buildInputs = with pkgs; [
-	      sbt 
-	      metals
-	      ammonite
-	    ];
-	    shellHook = ''
-	      export PS1='[$PWD]\n❄ '
-	    '';
-	  };
-	});
+          pkgs = nixpkgsFor.${system};
+        in
+        {
+          default = pkgs.mkShell {
+            buildInputs = with pkgs; [
+              sbt
+              metals
+              ammonite
+            ];
+            shellHook = ''
+              	      export PS1='[$PWD]\n❄ '
+              	    '';
+          };
+        });
     };
 }

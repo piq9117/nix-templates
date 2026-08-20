@@ -54,21 +54,27 @@ nix flake init -t "github:piq9117/nix-templates#react-ts"
 nix flake init -t "github:piq9117/nix-templates#react-js"
 ```
 
-# Scala
+## Scala
 ```sh
 nix flake init -t "github:piq9117/nix-templates#scala"
 ```
 
-# Rust
+## Rust
 ```sh
 nix flake init -t "github:piq9117/nix-templates#rust"
 ```
 
-# Flutter
+## Flutter
 ```sh
 nix flake init -t "github:piq9117/nix-templates#flutter"
 ```
 
-# Gleam
+## Gleam
 ```sh
 nix flake init -t "github:piq9117/nix-templates#gleam"
+```
+
+## Typescript
+```sh
+nix flake init -t "github:piq9117/nix-templates#typescript"
+```

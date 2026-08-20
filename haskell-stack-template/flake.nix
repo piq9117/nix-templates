@@ -1,23 +1,24 @@
 {
   inputs.nixpkgs.url = github:NixOS/nixpkgs/nixos-unstable;
-  outputs = {self, nixpkgs}: 
+  outputs = { self, nixpkgs }:
     let
       # forAllSystems = nixpkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed;
       forAllSystems = nixpkgs.lib.genAttrs [
         "x86_64-linux"
       ];
-      nixpkgsFor = forAllSystems(system: import nixpkgs {
+      nixpkgsFor = forAllSystems (system: import nixpkgs {
         inherit system;
         overlays = [ self.overlay ];
       });
-    in {
+    in
+    {
       overlay = final: prev: {
         hsPkgs = prev.haskell.packages.ghc9102.override {
           overrides = hfinal: hprev: { };
-        }; 
+        };
       };
 
-      devShells = forAllSystems(system: 
+      devShells = forAllSystems (system:
         let
           pkgs = nixpkgsFor.${system};
           stack-wrapped = pkgs.symlinkJoin {
@@ -35,13 +36,14 @@
           };
 
           devTools = with pkgs; [
-                zlib
-                hsPkgs.ghc
-                hsPkgs.haskell-language-server
-                hsPkgs.hpack
-                stack-wrapped
+            zlib
+            hsPkgs.ghc
+            hsPkgs.haskell-language-server
+            hsPkgs.hpack
+            stack-wrapped
           ];
-        in {
+        in
+        {
           default = pkgs.mkShell {
             buildInputs = devTools;
             withHoogle = true;

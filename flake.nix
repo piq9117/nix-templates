@@ -1,72 +1,101 @@
 {
   description = "Piq's flake templates";
 
-  outputs = { self, nixpkgs }: {
+  inputs.nixpkgs.url = github:NixOS/nixpkgs/nixpkgs-unstable;
 
-    templates = {
-      haskell-cabal = {
-        path = ./haskell-cabal-template;
-        description = "Cabal project template";
-      };
+  outputs = { self, nixpkgs }:
+    let
+      forAllSystems = nixpkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed;
+      nixpkgsFor = forAllSystems (system: import nixpkgs {
+        inherit system;
+      });
+    in
+    {
+      templates = {
+        haskell-cabal = {
+          path = ./haskell-cabal-template;
+          description = "Cabal project template";
+        };
 
-      haskell-stack = {
-        path = ./haskell-stack-template;
-        description = "Stack project template";
-      };
+        haskell-stack = {
+          path = ./haskell-stack-template;
+          description = "Stack project template";
+        };
 
-      nodejs = {
-        path = ./nodejs-template;
-        description = "Nodejs project template";
-      };
+        nodejs = {
+          path = ./nodejs-template;
+          description = "Nodejs project template";
+        };
 
-      go = {
-        path = ./go-template;
-        description = "Go project template";
-      };
+        go = {
+          path = ./go-template;
+          description = "Go project template";
+        };
 
-      ocaml = {
-        path = ./ocaml-template;
-        description = "OCaml project template";
-      };
+        ocaml = {
+          path = ./ocaml-template;
+          description = "OCaml project template";
+        };
 
-      purescript = {
-        path = ./purescript-template;
-        description = "Purescript project template";
-      };
+        purescript = {
+          path = ./purescript-template;
+          description = "Purescript project template";
+        };
 
-      react-nextjs = {
-        path = ./react-nextjs-template;
-        description = "React NextJS Template";
-      };
+        react-nextjs = {
+          path = ./react-nextjs-template;
+          description = "React NextJS Template";
+        };
 
-      react-ts = {
-        path = ./react-ts-template;
-        description = "React TS Template";
-      };
+        react-ts = {
+          path = ./react-ts-template;
+          description = "React TS Template";
+        };
 
-      react-js = {
-        path = ./react-js-template;
-        description = "React JS Template";
-      };
+        react-js = {
+          path = ./react-js-template;
+          description = "React JS Template";
+        };
 
-      scala = {
-        path = ./scala-template;
-        description = "Scala Template";
-      };
+        scala = {
+          path = ./scala-template;
+          description = "Scala Template";
+        };
 
-      rust = {
-        path = ./rust-cargo-template;
-        description = "Rust Template";
-      };
-      flutter = {
-        path = ./flutter-template;
-        description = "Flutter Template";
-      };
+        rust = {
+          path = ./rust-cargo-template;
+          description = "Rust Template";
+        };
 
-      gleam = {
-        path = ./gleam-template;
-        description = "Gleam Template";
+        flutter = {
+          path = ./flutter-template;
+          description = "Flutter Template";
+        };
+
+        gleam = {
+          path = ./gleam-template;
+          description = "Gleam Template";
+        };
+
+        typescript = {
+          path = ./typescript-template;
+          description = "Typescript Template";
+        };
       };
+      devShells = forAllSystems (system:
+        let
+          pkgs = nixpkgsFor.${system};
+        in
+        {
+          default = pkgs.mkShell {
+            buildInputs = with pkgs; [
+              nixpkgs-fmt
+              treefmt
+            ];
+            shellHook = ''
+              export PS1='[$PWD]\n❄ '
+            '';
+          };
+        });
     };
-  };
 }

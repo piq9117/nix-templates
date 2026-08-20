@@ -10,12 +10,13 @@
     };
   };
 
-  outputs = {
-    nixpkgs,
-    flake-utils,
-    ...
-  }:
-    flake-utils.lib.eachDefaultSystem (system: let
+  outputs =
+    { nixpkgs
+    , flake-utils
+    , ...
+    }:
+    flake-utils.lib.eachDefaultSystem (system:
+    let
       pkgs = nixpkgs.legacyPackages.${system};
       pname = ""; # <same as package.json name>
       version = "0.1.0";
@@ -27,7 +28,8 @@
       ];
       nativeBuildInputs = buildInputs;
       npmDepsHash = ""; # <prefetch-npm-deps package-lock.json>
-    in {
+    in
+    {
       devShells.default = pkgs.mkShell {
         inherit buildInputs;
         shellHook = ''

@@ -5,14 +5,15 @@
     nixpkgs.url = github:NixOS/nixpkgs/nixos-unstable;
   };
 
-  outputs = { self, nixpkgs }: 
+  outputs = { self, nixpkgs }:
     let
-      supportedSystems = ["x86_64-linux"];
+      supportedSystems = [ "x86_64-linux" ];
       forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
-      nixpkgsFor = forAllSystems(system: import nixpkgs {
+      nixpkgsFor = forAllSystems (system: import nixpkgs {
         inherit system;
       });
-    in {
+    in
+    {
 
       # Initialize project with cargo init
       # 
@@ -32,10 +33,11 @@
       #     };
       #   });
 
-      devShells = forAllSystems(system: 
+      devShells = forAllSystems (system:
         let
           pkgs = nixpkgsFor.${system};
-        in {
+        in
+        {
           default = pkgs.mkShell {
             buildInputs = with pkgs; [
               rustc

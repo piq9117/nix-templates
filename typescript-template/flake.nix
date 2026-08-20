@@ -1,7 +1,8 @@
 {
-  description = "go template";
+  description = "typescript template";
 
   inputs.nixpkgs.url = github:NixOS/nixpkgs/nixpkgs-unstable;
+
   outputs = { self, nixpkgs }:
     let
       forAllSystems = nixpkgs.lib.genAttrs nixpkgs.lib.systems.flakeExposed;
@@ -17,11 +18,16 @@
         {
           default = pkgs.mkShell {
             buildInputs = with pkgs; [
-              go
-              gopls
-              golangci-lint
-              delve
+              typescript-language-server
+              nodejs
+              typescript
+              treefmt
+              nixpkgs-fmt
+              biome
             ];
+            shellHook = ''
+              export PS1='[$PWD]\n❄ '
+            '';
           };
         });
     };
